@@ -1,0 +1,13 @@
+html, code {
+    font-family: 'Fira Code', monospace;
+}
+
+.hljs {
+    padding-top: 0.5rem;
+    background: #262335;
+    padding: 0;
+}
+
+button {
+    outline-color: #f97e72 !important;
+}
