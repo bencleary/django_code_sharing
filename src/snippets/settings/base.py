@@ -17,7 +17,7 @@ DJANGO_APPS = [
 ]
 
 VENDOR_APPS = [
-
+    'rest_framework',
 ]
 
 APPS = [

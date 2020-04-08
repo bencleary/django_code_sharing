@@ -23,7 +23,7 @@ django_urls = [
 ]
 
 api_urls = [
-
+    path('api/', include('snippet.api.urls'))
 ]
 
 view_urls = [
