@@ -31,7 +31,6 @@ input.addEventListener('keyup', updateLineNumber, false);
 input.addEventListener('keypress', updateLineNumber, false);
 input.addEventListener('keydown', function (e) {
     let key = e.key;
-    console.log(key);
     if (key == "Tab") {
         e.preventDefault();
         const TABSIZE = 4;
