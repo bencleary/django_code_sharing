@@ -33,9 +33,26 @@ input.addEventListener('keydown', function (e) {
 })
 //input.addEventListener('change', updateLineNumber());
 
+function parseTags() {
+    let title = input.value.match('(\&#TITLE:)(.*?)(\:&#TITLE)');
+    let syntax = input.value.match('(\&#SYNTAX:)(.*?)(\:&#SYNTAX)');
+    let description = input.value.match('(\&#DESC:).*\n(.*)\n?(.*))(\:&#DESC)');
+    input.value = input.value.replace(title[0], "").trim();
+    input.value = input.value.replace(syntax[0], "").trim();
+    input.value = input.value.replace(description[0], "").trim();
+    console.log(title);
+    console.log(syntax);
+    console.log(description);
+}
+
+
 preview.addEventListener('click', (event) => {
     output.className = "text-sm break-words";
     previewHolder.style.display = 'block';
+
+
+    //parseTags();
+
     output.innerText = input.value;
     hljs.initHighlighting.called = false;
     hljs.initHighlighting();
