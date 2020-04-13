@@ -4,6 +4,7 @@ let plines = document.getElementById('previewLines');
 let preview = document.getElementById('preview');
 let previewHolder = document.getElementById('preview-holder');
 let output = document.getElementById('output');
+let save = document.getElementById('save');
 
 function makeLineNumber(number) {
     let li = document.createElement('li');
@@ -33,16 +34,22 @@ input.addEventListener('keydown', function (e) {
 })
 //input.addEventListener('change', updateLineNumber());
 
+let message = {};
+
 function parseTags() {
     let title = input.value.match('(\&#TITLE:)(.*?)(\:&#TITLE)');
     let syntax = input.value.match('(\&#SYNTAX:)(.*?)(\:&#SYNTAX)');
-    let description = input.value.match('(\&#DESC:).*\n(.*)\n?(.*))(\:&#DESC)');
-    input.value = input.value.replace(title[0], "").trim();
-    input.value = input.value.replace(syntax[0], "").trim();
-    input.value = input.value.replace(description[0], "").trim();
-    console.log(title);
-    console.log(syntax);
-    console.log(description);
+    let description = input.value.match('(&#DESC:)(.|\n)*?(:&#DESC)');
+    let values = [title[0], syntax[0], description[0]];
+    values.forEach(x => {
+        input.value = input.value.replace(x, '').trim();
+    })
+    message = {
+        title: title[2],
+        syntax: syntax[2],
+        description: description[0].replace('&#DESC:', '').replace(':&#DESC', ''),
+        content: input.value
+    };
 }
 
 
@@ -51,7 +58,7 @@ preview.addEventListener('click', (event) => {
     previewHolder.style.display = 'block';
 
 
-    //parseTags();
+    parseTags();
 
     output.innerText = input.value;
     hljs.initHighlighting.called = false;
@@ -84,75 +91,17 @@ function updateTextArea() {
 updateTextArea();
 
 
-function toggleDarkMode() {
 
-    if (localStorage.getItem('mode') == 'LIGHT') {
-        localStorage.setItem('mode', 'DARK');
-    } else {
-        localStorage.setItem('mode', 'LIGHT');
-    }
-
-    switch (localStorage.getItem('mode')) {
-        case 'LIGHT':
-            document.documentElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('mode', 'LIGHT');
-            break;
-        case 'DARK':
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('mode', 'DARK');
-            break;
-    }
-    toggleButtonIcon();
-    updateButtonTitle();
-    updateLogo();
-}
-
-function toggleButtonIcon() {
-    switch (localStorage.getItem('mode')) {
-        case 'DARK':
-            document.getElementById('light-dark-toggle').innerHTML = '<i class="fas fa-sun"></i>';
-            break;
-        case 'LIGHT':
-            document.getElementById('light-dark-toggle').innerHTML = '<i class="fas fa-moon"></i>';
-            break;
-    }
-
-}
-
-function updateButtonTitle() {
-    switch (localStorage.getItem('mode')) {
-        case 'DARK':
-            document.getElementById('light-dark-toggle').title = 'Enable Light Mode';
-            break;
-        case 'LIGHT':
-            document.getElementById('light-dark-toggle').title = 'Enable Dark Mode';
-            break;
-    }
-}
-
-function updateLogo() {
-    switch (localStorage.getItem('mode')) {
-        case 'DARK':
-            document.getElementById('snip-logo').src = "/static/imgs/logo-light.png";
-            break;
-        case 'LIGHT':
-            document.getElementById('snip-logo').src = "/static/imgs/logo.png";
-            break;
-    }
-}
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    switch (localStorage.getItem('mode')) {
-        case 'LIGHT':
-            document.documentElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('mode', 'LIGHT');
-            break;
-        case 'DARK':
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('mode', 'DARK');
-            break;
-    }
-    toggleButtonIcon();
-    updateButtonTitle();
-    updateLogo();
+    //updateColorScheme();
 });
+
+save.addEventListener('click', (event) => {
+    console.log(message);
+    axios.post('/api/v1/snippet/', message).then(res => {
+        console.log(res.data);
+        window.history.replaceState(null, null, `/${res.data.urn}/`);
+        window.location.reload();
+    })
+})

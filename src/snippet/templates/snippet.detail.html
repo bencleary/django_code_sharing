@@ -1,4 +1,5 @@
 {% extends 'layout/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -8,16 +9,15 @@
             <ul id="previewLines" class="w-8 text-sm text-right">
                 <li class="py">1</li>
             </ul>
-            <pre class="ml-3 pl-2"><code id="output" class="text-sm break-words">{{ snippet.content|safe }}</code></pre>
+            <pre class="ml-3 pl-2"><code id="output" class="text-sm break-words">{{ snippet.content }}</code></pre>
         </div>
     </div>
-    <!--<pre><code class="text-sm " contenteditable="true"></code></pre>-->
 </div>
 
 {% endblock %}
 
 {% block script %}
-
+<script src="{% static 'js/activity-bar.js' %}"></script>
 <script>
     let output = document.getElementById('output');
 
