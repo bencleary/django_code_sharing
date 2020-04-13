@@ -2,9 +2,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'editor-background': '#262335',
-        'activity-bar-foreground': '#f97e72',
-        'acitivty-bar-background': '#2a2139',
+        'editor-background': '#011627',
+        'activity-bar-foreground': '#d6deeb',
+        'acitivty-bar-background': '#1A2D3C',
       }
     },
   },

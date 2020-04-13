@@ -1,25 +1,30 @@
 {% extends 'layout/base.html' %}
+{% load static %}
 
 {% block content %}
 
-<div class="w-12 py-2 px-2 h-screen fixed left-0 top-0 flex flex-col" style="background: #171520;">
-    <button class="w-8 h-8 outline-none border-0 flex items-center justify-center text-activity-bar-foreground hover:text-snipp-codes-activity-dark text-xl" onclick="reset()">
+<div class="activity-bar w-12 py-2 px-2 h-screen fixed left-0 top-0 flex flex-col">
+    <button class="w-8 h-8 outline-none border-0 flex items-center justify-center text-xl" onclick="reset()">
         <i class="far fa-file outline-none"></i>
     </button>
-    <button class="w-8 h-8 outline-none border-0 flex items-center justify-center text-activity-bar-foreground hover:text-snipp-codes-activity-dark mt-2 text-xl">
+    <button class="w-8 h-8 outline-none border-0 flex items-center justify-center mt-2 text-xl">
         <i class="far fa-save outline-none"></i>
     </button>
-    <button class="w-8 h-8 outline-none border-0 flex items-center justify-center text-activity-bar-foreground hover:text-snipp-codes-activity-dark mt-2 text-xl" title="Preview" aria-label="Preview" id="preview">
+    <button class="w-8 h-8 outline-none border-0 flex items-center justify-center mt-2 text-xl" title="Preview" aria-label="Preview" id="preview">
         <i class="far fa-eye outline-none"></i>
     </button>
 </div>
 
-<div class="ml-12 px-2 py-2 h-full flex relative">
+<div class="editor ml-12 px-2 py-2 h-full flex relative">
     <ul id="lines" class="w-8 text-sm text-right">
         <li class="py">1</li>
     </ul>
+    {% if snippet %}
+    <textarea id="input" class="w-full text-sm ml-3 pl-2 bg-transparent outline-none resize-none" style="min-height: 80vh;">{{ snippet.content|safe }}</textarea>
+    {% else %}
     <textarea id="input" class="w-full text-sm ml-3 pl-2 bg-transparent outline-none resize-none" style="min-height: 80vh;"></textarea>
-    <div class="absolute right-0 top-0 pl-2 min-h-screen w-1/2 border-l border-activity-bar-foreground bg-editor-background shadow-2xl flex" style="display: none;" id="preview-holder">
+    {% endif %}
+    <div class="editor absolute right-0 top-0 pl-2 min-h-screen w-1/2 border-l shadow-2xl flex" style="display: none;" id="preview-holder">
         <button class="absolute w-8 h-8 left-0 top-0 mt-4 -ml-8 bg-activity-bar-foreground text-xl text-editor-background rounded-tl-sm rounded-bl-sm" onclick="hidePreview()">
             <i class="fas fa-times"></i>
         </button>
@@ -32,5 +37,11 @@
     </div>
     <!--<pre><code class="text-sm " contenteditable="true"></code></pre>-->
 </div>
+
+{% endblock %}
+
+{% block script %}
+
+<script src="{% static 'js/main.js' %}"></script>
 
 {% endblock %}

@@ -8,16 +8,25 @@
     <title>Code Sharing Platform</title>
     <link rel="stylesheet" href="{% static 'vendor/tailwind/base.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/monokai-sublime.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
     <link href="{% static 'css/overrides.css' %}" rel="stylesheet">
 </head>
 
-<body class="bg-editor-background text-white">
+<body class="">
     {% block content %}
     {% endblock %}
     <script src="{% static 'vendor/highlightjs/highlight.pack.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        String.prototype.lines = function () {
+            return this.split(/\r*\n/);
+        }
+        String.prototype.lineCount = function () {
+            return this.lines().length;
+        }
+    </script>
+    {% block script %}
+    {% endblock %}
 </body>
-
 </html>

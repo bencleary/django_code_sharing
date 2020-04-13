@@ -2,12 +2,40 @@ html, code {
     font-family: 'Fira Code', monospace;
 }
 
+:root {
+    --bg: #011627;
+    --forground: #d6deeb;
+    --activity-bg: #1A2D3C;
+}
+
+[data-theme="dark"] {
+    --bg: #011627;
+    --forground: #d6deeb;
+    --activity-bg: #1A2D3C;
+}
+
+[data-theme="light"] {
+    --bg: #F6F6F6;
+    --forground: #403f53;
+    --activity-bg: #D8D8D8;
+}
+
+.editor {
+    background: var(--bg);
+    color: var(--forground);
+}
+
+.activity-bar {
+    background: var(--activity-bg);
+    color: var(--forground);
+}
+
 .hljs {
     padding-top: 0.5rem;
-    background: #262335;
+    background: none;
     padding: 0;
 }
 
 button {
-    outline-color: #f97e72 !important;
+    outline-color: #d6deeb !important;
 }

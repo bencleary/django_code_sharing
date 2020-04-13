@@ -1,10 +1,3 @@
-String.prototype.lines = function () {
-    return this.split(/\r*\n/);
-}
-String.prototype.lineCount = function () {
-    return this.lines().length;
-}
-
 let input = document.getElementById('input');
 let lines = document.getElementById('lines');
 let plines = document.getElementById('previewLines');
@@ -19,6 +12,7 @@ function makeLineNumber(number) {
 }
 
 function updateLineNumber() {
+    input.style.height = input.scrollHeight + 10 + "px";
     lines.innerHTML = "";
     let counts = input.value.lineCount() + 1;
     for (x = 1; x < counts; x++) {
@@ -65,3 +59,9 @@ function reset() {
 function hidePreview() {
     previewHolder.style.display = 'none';
 }
+
+function updateTextArea() {
+    updateLineNumber();
+}
+
+updateTextArea();
