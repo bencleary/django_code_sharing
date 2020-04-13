@@ -32,7 +32,7 @@ html, code {
 
 .hljs {
     padding-top: 0.5rem;
-    background: none;
+    background: none !important;
     padding: 0;
 }
 

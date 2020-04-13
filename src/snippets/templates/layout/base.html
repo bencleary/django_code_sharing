@@ -14,10 +14,12 @@
     <link href="{% static 'css/overrides.css' %}" rel="stylesheet">
 </head>
 
-<body class="">
+<body class="editor">
+    {% include 'partials/activitybar.partial.html' %}
     {% block content %}
     {% endblock %}
     <script src="{% static 'vendor/highlightjs/highlight.pack.js' %}"></script>
+    <script src="{% static 'vendor/axios/axios.min.js' %}"></script>
     <script>
         String.prototype.lines = function () {
             return this.split(/\r*\n/);
