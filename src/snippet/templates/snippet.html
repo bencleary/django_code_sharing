@@ -7,8 +7,8 @@
     <ul id="lines" class="w-8 text-sm text-right">
         <li class="py">1</li>
     </ul>
-    {% if snippet %}
-    <textarea id="input" class="w-full text-sm ml-3 pl-2 bg-transparent outline-none resize-none" style="min-height: 80vh;">{{ snippet.content|safe }}</textarea>
+    {% if clone %}
+    <textarea id="input" class="w-full text-sm ml-3 pl-2 bg-transparent outline-none resize-none" style="min-height: 80vh;" data-cloned-from="{{ clone.urn }}">{{ clone.content }}</textarea>
     {% else %}
     <textarea id="input" class="w-full text-sm ml-3 pl-2 bg-transparent outline-none resize-none" style="min-height: 80vh;"></textarea>
     {% endif %}

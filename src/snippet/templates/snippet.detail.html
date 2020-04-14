@@ -34,6 +34,20 @@
         li.innerText = x;
         plines.append(li);
     }
+
+
+    function saveImage() {
+        let out = document.getElementById('preview-holder');
+        out.style.padding = "2rem";
+        domtoimage.toJpeg(out, { quality: 0.95 })
+        .then(function (dataUrl) {
+            var link = document.createElement('a');
+            link.download = 'my-image-name.jpeg';
+            link.href = dataUrl;
+            link.click();
+            out.style.padding = "0";
+        });
+    }
 </script>
 
 {% endblock %}

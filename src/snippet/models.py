@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class Snippet(models.Model):
     urn = models.UUIDField(_("URN"), default=uuid4)
+    source = models.UUIDField(_("Source Snippet"), blank=True, null=True)
     syntax = models.CharField(_("Syntax"), max_length=75, blank=True)
     title = models.CharField(_("Title"), max_length=150, blank=True)
     description = models.TextField(_("Description"), blank=True)

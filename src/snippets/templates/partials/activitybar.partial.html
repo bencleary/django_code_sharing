@@ -6,14 +6,19 @@
             <i class="far fa-file outline-none"></i>
         </button>
         {% if snippet %}
+        <a href="/?clone={{ snippet.urn }}">
         <button class="w-8 h-8 outline-none border-0 flex items-center justify-center mt-2 text-xl disabled" title="Copy & Edit">
             <i class="far fa-copy"></i>
         </button>
+        </a>
         <a href="/{{ snippet.urn }}/raw/">
             <button class="w-8 h-8 outline-none border-0 flex items-center justify-center mt-2 text-xl disabled" title="Raw">
                 <i class="fas fa-code"></i>
             </button>
         </a>
+        <button class="w-8 h-8 outline-none border-0 flex items-center justify-center mt-2 text-xl disabled" onclick="saveImage()" title="Image">
+            <i class="far fa-image"></i>
+        </button>
         {% else %}
                <button class="relative w-8 h-8 outline-none border-0 flex items-center justify-center mt-2 text-xl" title="Save" id="save">
             <i class="far fa-save outline-none"></i>

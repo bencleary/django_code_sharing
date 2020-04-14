@@ -37,17 +37,19 @@ input.addEventListener('keydown', function (e) {
 let message = {};
 
 function parseTags() {
-    let title = input.value.match('(\&#TITLE:)(.*?)(\:&#TITLE)');
-    let syntax = input.value.match('(\&#SYNTAX:)(.*?)(\:&#SYNTAX)');
-    let description = input.value.match('(&#DESC:)(.|\n)*?(:&#DESC)');
-    let values = [title[0], syntax[0], description[0]];
+    let title = input.value.match('(\&#:TITLE:)(.*?)(\:&#)');
+    let syntax = input.value.match('(\&#:SYNTAX:)(.*?)(\:&#)');
+    let description = input.value.match('(&#:DESC:)(.|\n)*?(:&#)');
+    let values = [title, syntax, description];
     values.forEach(x => {
-        input.value = input.value.replace(x, '').trim();
+        if (x != null) {
+            input.value = input.value.replace(x[0], '').trim();
+        }
     })
     message = {
-        title: title[2],
-        syntax: syntax[2],
-        description: description[0].replace('&#DESC:', '').replace(':&#DESC', ''),
+        title: title != null ? title[2] : "",
+        syntax: syntax != null ? syntax[2] : "",
+        description: description != null ? description[0].replace('&#:DESC:', '').replace(':&#', '') : "",
         content: input.value
     };
 }
@@ -99,9 +101,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 save.addEventListener('click', (event) => {
     console.log(message);
+    let sourceURN = input.getAttribute('data-cloned-from');
+    if (sourceURN) {
+        message.source = sourceURN
+    };
     axios.post('/api/v1/snippet/', message).then(res => {
         console.log(res.data);
         window.history.replaceState(null, null, `/${res.data.urn}/`);
         window.location.reload();
     })
 })
+
+function saveImage() {
+    domtoimage.toJpeg(document.getElementById('output'), { quality: 0.95 })
+    .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'my-image-name.jpeg';
+        link.href = dataUrl;
+        link.click();
+    });
+}
